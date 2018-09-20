@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import TimeRemaining from './time-remaining'
+import GasPriceChart from './gas-price-chart.component'
 
 export default class AdvancedTabContent extends Component {
   static contextTypes = {
@@ -27,9 +28,6 @@ export default class AdvancedTabContent extends Component {
           precision={precision}
           onChange={event => onChange(Number(event.target.value))}
         />
-        {showGWEI
-          ? <span className="advanced-tab__gas-edit-row__gwei-symbol">GWEI</span>
-          : null}
       </div>
     )
   }
@@ -72,7 +70,7 @@ export default class AdvancedTabContent extends Component {
   renderGasEditRows (customGasPrice, updateCustomGasPrice, customGasLimit, updateCustomGasLimit) {
     return (
       <div className="advanced-tab__gas-edit-rows">
-        { this.renderGasEditRow('gasPriceNoDenom', customGasPrice, updateCustomGasPrice, customGasPrice, 9, true) }
+        { this.renderGasEditRow('gasPrice', customGasPrice, updateCustomGasPrice, customGasPrice, 9, true) }
         { this.renderGasEditRow('gasLimit', customGasLimit, updateCustomGasLimit, customGasLimit, 0) }
       </div>
     )
@@ -91,16 +89,15 @@ export default class AdvancedTabContent extends Component {
     return (
       <div className="advanced-tab">
         { this.renderDataSummary(totalFee, millisecondsRemaining) }
-        <div className="advanced-tab__fee-chart-title">
-          { this.context.t('feeChartTitle') }
+        <div className="advanced-tab__fee-chart">
+          { this.renderGasEditRows(
+              customGasPrice,
+              updateCustomGasPrice,
+              customGasLimit,
+              updateCustomGasLimit
+          ) }
+          <GasPriceChart />
         </div>
-        <div className="advanced-tab__fee-chart" />
-        { this.renderGasEditRows(
-            customGasPrice,
-            updateCustomGasPrice,
-            customGasLimit,
-            updateCustomGasLimit
-        ) }
       </div>
     )
   }

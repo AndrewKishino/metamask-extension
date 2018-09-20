@@ -93,6 +93,8 @@ export default class PageContainer extends PureComponent {
       onSubmit,
       submitText,
       disabled,
+      headerCloseText,
+      hideCancel,
     } = this.props
 
     return (
@@ -106,13 +108,13 @@ export default class PageContainer extends PureComponent {
           backButtonStyles={backButtonStyles}
           backButtonString={backButtonString}
           tabs={this.renderTabs()}
+          headerCloseText={headerCloseText}
         />
         <div className="page-container__content">
           { this.renderContent() }
         </div>
         <PageContainerFooter
-          onCancel={onCancel}
-          cancelText={cancelText}
+          hideCancel={hideCancel}
           onSubmit={onSubmit}
           submitText={submitText}
           disabled={disabled}

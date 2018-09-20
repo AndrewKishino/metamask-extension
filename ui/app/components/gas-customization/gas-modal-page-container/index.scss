@@ -4,6 +4,163 @@
 .gas-modal-page-container {
   .page-container {
     width: 391px;
+    background-color: $white;
+    box-shadow: 0 0 7px 0 rgba(0, 0, 0, .08);
+    z-index: 25;
+    display: flex;
+    flex-flow: column;
+    border-radius: 8px;
+
+    &__header {
+      display: flex;
+      flex-flow: column;
+      border-bottom: 1px solid $geyser;
+      padding: 0px;
+      padding-top: 16px;
+      flex: 0 0 auto;
+      position: relative;
+
+      &--no-padding-bottom {
+        padding-bottom: 0;
+      }
+    }
+
+    &__header-close {
+      color: $tundora;
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      cursor: pointer;
+      overflow: hidden;
+
+      &::after {
+        content: '\00D7';
+        font-size: 40px;
+        line-height: 20px;
+      }
+    }
+
+    &__header-close-text {
+      font-size: 14px;
+      color: #4EADE7;
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    &__header-row {
+      padding-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__footer {
+      display: flex;
+      flex-flow: row;
+      justify-content: center;
+      border-top: 1px solid $geyser;
+      padding: 16px;
+      flex: 0 0 auto;
+
+      .btn-default,
+      .btn-confirm {
+        font-size: 1rem;
+      }
+    }
+
+    &__footer-button {
+      height: 55px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      margin-right: 16px;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+
+    &__back-button {
+      color: #2f9ae0;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 400;
+    }
+
+    &__title {
+      color: $black;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    &__subtitle {
+      display: none;
+    }
+
+    &__tabs {
+      display: flex;
+      margin-top: 0px;
+    }
+
+    &__tab {
+      width: 100%;
+      padding: 8px;
+      color: $dusty-gray;
+      font-family: Roboto;
+      font-size: 14px;
+      text-align: center;
+      cursor: pointer;
+      border-bottom: none;
+      margin-right: 16px;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+
+      &--selected {
+        color: $curious-blue;
+        border-bottom: 2px solid $curious-blue;
+      }
+    }
+
+    &--full-width {
+      width: 100% !important;
+    }
+
+    &--full-height {
+      height: 100% !important;
+      max-height: initial !important;
+      min-height: initial !important;
+    }
+
+    &__content {
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    &__warning-container {
+      background: $linen;
+      padding: 20px;
+      display: flex;
+      align-items: start;
+    }
+
+    &__warning-message {
+      padding-left: 15px;
+    }
+
+    &__warning-title {
+      font-weight: 500;
+    }
+
+    &__warning-icon {
+      padding-top: 5px;
+    }
   }
 }
 
@@ -20,11 +177,18 @@
     display: flex;
     flex-flow: column;
     color: $scorpion;
+    font-size: 12px;
 
-    &__total-info, &__sum-info {
+    &__total-info, &__amount-info, &__fee-info {
       display: flex;
       flex-flow: row;
       justify-content: space-between;
+    }
+
+    &__fiat-total-info {
+      display: flex;
+      flex-flow: row;
+      justify-content: flex-end;
     }
 
     &__total-info {

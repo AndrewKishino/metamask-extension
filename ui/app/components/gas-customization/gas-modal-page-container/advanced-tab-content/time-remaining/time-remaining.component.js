@@ -23,10 +23,7 @@ export default class TimeRemaining extends Component {
 
     return (
       <div className="time-remaining">
-        <span className="minutes-num">{minutes}</span>
-        <span className="minutes-label">{this.context.t('minutesShorthand')}</span>
-        <span className="seconds-num">{seconds}</span>
-        <span className="seconds-label">{this.context.t('secondsShorthand')}</span>
+        1 min 31 sec
       </div>
     )
   }

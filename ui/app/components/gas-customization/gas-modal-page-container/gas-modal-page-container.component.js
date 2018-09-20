@@ -24,8 +24,8 @@ export default class GasModalPageContainer extends Component {
       newTotalEth: PropTypes.string,
     }),
     onSubmit: PropTypes.func,
-    customGasPriceInHex: PropTypes.string,
-    customGasLimitInHex: PropTypes.string,
+    customModalGasPriceInHex: PropTypes.string,
+    customModalGasLimitInHex: PropTypes.string,
   }
 
   state = {}
@@ -57,26 +57,48 @@ export default class GasModalPageContainer extends Component {
     )
   }
 
-  renderInfoRow (className, totalLabelKey, fiatTotal, cryptoTotal) {
+  renderInfoRow (className, totalLabelKey, fiatTotal, cryptoTotal, sendAmount, transactionFee) {
     return (
       <div className={className}>
-        <div className={`${className}__total-info`}>
-          <span className={`${className}__total-info__total-label`}>{`${this.context.t(totalLabelKey)}:`}</span>
-          <span className={`${className}__total-info__total-value`}>{fiatTotal}</span>
+        <div className={`${className}amount-info`}>
+          <span className={`${className}__total-info__total-label`}>{`Send Amount`}</span>
+          <span className={`${className}__total-info__total-value`}>{sendAmount}</span>
         </div>
-        <div className={`${className}__sum-info`}>
-          <span className={`${className}__sum-info__sum-label`}>{`${this.context.t('amountPlusTxFee')}`}</span>
+        <div className={`${className}__fee-info`}>
+          <span className={`${className}__sum-info__sum-label`}>{`Transaction Fee`}</span>
+          <span className={`${className}__sum-info__sum-value`}>{transactionFee}</span>
+        </div>
+        <div className={`${className}__total-info`}>
+          <span className={`${className}__sum-info__sum-label`}>{`New Total`}</span>
           <span className={`${className}__sum-info__sum-value`}>{cryptoTotal}</span>
+        </div>
+        <div className={`${className}__fiat-total-info`}>
+          <span className={`${className}__sum-info__sum-value`}>{fiatTotal}</span>
         </div>
       </div>
     )
   }
 
-  renderInfoRows (originalTotalFiat, originalTotalEth, newTotalFiat, newTotalEth) {
+  renderInfoRows (newTotalFiat, newTotalEth, sendAmount, transactionFee) {
     return (
       <div>
-        { this.renderInfoRow('gas-modal-content__info-row--fade', 'originalTotal', originalTotalFiat, originalTotalEth) }
-        { this.renderInfoRow('gas-modal-content__info-row', 'newTotal', newTotalFiat, newTotalEth) }
+        <div className={'gas-modal-content__info-row'}>
+          <div className={`${'gas-modal-content__info-row'}__amount-info`}>
+            <span className={`${'gas-modal-content__info-row'}__amount-info__total-label`}>{`Send Amount`}</span>
+            <span className={`${'gas-modal-content__info-row'}__amount-info__total-value`}>{sendAmount}</span>
+          </div>
+          <div className={`${'gas-modal-content__info-row'}__fee-info`}>
+            <span className={`${'gas-modal-content__info-row'}__fee-info__sum-label`}>{`Transaction Fee`}</span>
+            <span className={`${'gas-modal-content__info-row'}__fee-info__sum-value`}>{transactionFee}</span>
+          </div>
+          <div className={`${'gas-modal-content__info-row'}__total-info`}>
+            <span className={`${'gas-modal-content__info-row'}__total-info__total-label`}>{`New Total`}</span>
+            <span className={`${'gas-modal-content__info-row'}__total-info__total-value`}>{newTotalEth}</span>
+          </div>
+          <div className={`${'gas-modal-content__info-row'}__fiat-total-info`}>
+            <span className={`${'gas-modal-content__info-row'}__fiat-total-info__sum-value`}>{newTotalFiat}</span>
+          </div>
+        </div>
       </div>
     )
   }
@@ -86,6 +108,8 @@ export default class GasModalPageContainer extends Component {
     originalTotalEth,
     newTotalFiat,
     newTotalEth,
+    sendAmount,
+    transactionFee,
   },
   {
     gasPriceButtonGroupProps,
@@ -106,7 +130,7 @@ export default class GasModalPageContainer extends Component {
         {tabsToRender.map(({ name, content }, i) => <Tab name={this.context.t(name)} key={`gas-modal-tab-${i}`}>
             <div className="gas-modal-content">
               { content }
-              { this.renderInfoRows(originalTotalFiat, originalTotalEth, newTotalFiat, newTotalEth) }
+              { this.renderInfoRows(newTotalFiat, newTotalEth, sendAmount,transactionFee) }
             </div>
           </Tab>
         )}
@@ -116,11 +140,11 @@ export default class GasModalPageContainer extends Component {
 
   render () {
     const {
-      hideModal,
+      cancelAndClose,
       infoRowProps,
       onSubmit,
-      customGasPriceInHex,
-      customGasLimitInHex,
+      customModalGasPriceInHex,
+      customModalGasLimitInHex,
       ...tabProps
     } = this.props
 
@@ -131,13 +155,15 @@ export default class GasModalPageContainer extends Component {
           subtitle={this.context.t('customGasSubTitle')}
           tabsComponent={this.renderTabs(infoRowProps, tabProps)}
           disabled={false}
-          onCancel={() => hideModal()}
-          onClose={() => hideModal()}
+          onCancel={() => cancelAndClose()}
+          onClose={() => cancelAndClose()}
           onSubmit={() => {
-            onSubmit(customGasLimitInHex, customGasPriceInHex)
-            hideModal()
+            onSubmit(customModalGasLimitInHex, customModalGasPriceInHex)
+            cancelAndClose()
           }}
           submitText={this.context.t('save')}
+          headerCloseText={'Close'}
+          hideCancel={true}
         />
       </div>
     )
